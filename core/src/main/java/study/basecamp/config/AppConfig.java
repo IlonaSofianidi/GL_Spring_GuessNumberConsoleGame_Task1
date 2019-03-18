@@ -1,9 +1,12 @@
-package study.basecamp;
+package study.basecamp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import study.basecamp.game.ConsoleUserGame;
+import study.basecamp.game.GameImpl;
+import study.basecamp.game.NumberGeneratorImpl;
 
 @ComponentScan
 @Configuration

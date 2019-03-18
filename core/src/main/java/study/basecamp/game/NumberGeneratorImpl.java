@@ -1,8 +1,8 @@
-package study.basecamp;
+package study.basecamp.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import study.basecamp.config.GameProperties;
 import javax.annotation.PostConstruct;
 import java.util.Random;
 

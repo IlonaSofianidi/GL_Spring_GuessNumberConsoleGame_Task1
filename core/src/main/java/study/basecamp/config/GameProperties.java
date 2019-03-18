@@ -1,4 +1,4 @@
-package study.basecamp;
+package study.basecamp.config;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,9 @@
-package study.basecamp;
+package study.basecamp.game;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import study.basecamp.config.GameProperties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -39,7 +40,7 @@ public class GameImpl implements Game {
         smallest = gameProperties.getMinNumber();
         guess = 0;
         remainingGuesses = guessCount;
-        biggest = numberGenerator.getMaxNumber();
+        biggest = gameProperties.getGameMaxNumber();
         number = numberGenerator.next();
 //        log.debug("the number is {}", number);
     }

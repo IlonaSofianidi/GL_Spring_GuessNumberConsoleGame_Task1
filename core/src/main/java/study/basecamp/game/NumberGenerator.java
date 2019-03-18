@@ -1,4 +1,4 @@
-package study.basecamp;
+package study.basecamp.game;
 
 public interface NumberGenerator {
 
