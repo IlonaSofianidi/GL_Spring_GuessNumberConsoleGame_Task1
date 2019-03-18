@@ -1,21 +1,20 @@
 package study.basecamp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+@Component
+@Slf4j
 public class GameImpl implements Game {
 
-    private static final Logger log = LoggerFactory.getLogger(GameImpl.class);
-
-    @Autowired
     private NumberGenerator numberGenerator;
+    private GameProperties gameProperties;
 
-
-    private int guessCount = 10;
+    private int guessCount;
     private int number;
     private int guess;
     private int smallest;
@@ -23,15 +22,26 @@ public class GameImpl implements Game {
     private int remainingGuesses;
     private boolean validNumberRange = true;
 
+    @Autowired
+    public void setGameProperties(GameProperties gameProperties) {
+        this.gameProperties = gameProperties;
+    }
+
+    @Autowired
+    public void setNumberGenerator(NumberGenerator numberGenerator) {
+        this.numberGenerator = numberGenerator;
+    }
+
     @PostConstruct
     @Override
     public void reset() {
-        smallest = 0;
+        guessCount = gameProperties.getGuessNumber();
+        smallest = gameProperties.getMinNumber();
         guess = 0;
         remainingGuesses = guessCount;
         biggest = numberGenerator.getMaxNumber();
         number = numberGenerator.next();
-        log.debug("the number is {}", number);
+//        log.debug("the number is {}", number);
     }
 
     @PreDestroy
@@ -70,16 +80,21 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public int getGuessCount() {
+        return guessCount;
+    }
+
+    @Override
     public void check() {
 
         checkValidNumberRange();
 
-        if(validNumberRange) {
-            if(guess > number) {
-                biggest = guess -1;
+        if (validNumberRange) {
+            if (guess > number) {
+                biggest = guess - 1;
             }
 
-            if(guess < number) {
+            if (guess < number) {
                 smallest = guess + 1;
             }
         }
@@ -101,7 +116,6 @@ public class GameImpl implements Game {
     public boolean isGameLost() {
         return !isGameWon() && remainingGuesses <= 0;
     }
-
 
     private void checkValidNumberRange() {
         validNumberRange = (guess >= smallest) && (guess <= biggest);

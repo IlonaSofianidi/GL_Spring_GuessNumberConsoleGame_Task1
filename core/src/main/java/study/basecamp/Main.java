@@ -1,35 +1,21 @@
 package study.basecamp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+@Slf4j
 public class Main {
-
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
-
-
     public static void main(String[] args) {
         log.info("Guess Number");
 
         // create context
         ConfigurableApplicationContext context
                 = new AnnotationConfigApplicationContext(AppConfig.class);
-
         // get bean
-        study.basecamp.NumberGenerator numberGenerator
-                = context.getBean("numberGenerator", study.basecamp.NumberGenerator.class);
-
-        // biz logic
-        int guess = numberGenerator.next();
-        log.info("My guess = {}", guess);
-
-        // get bean
-        study.basecamp.Game game = context.getBean(study.basecamp.Game.class);
-        game.setGuess(guess);
-
-        log.info("Result = {}", game.isGameWon() ? "Win" : "Lose");
+        study.basecamp.ConsoleUserGame consoleUserGame
+                = context.getBean("consoleUserGame", study.basecamp.ConsoleUserGame.class);
+        consoleUserGame.start();
 
         // close context
         context.close();
